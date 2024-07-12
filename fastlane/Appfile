@@ -1,0 +1,8 @@
+app_identifier("com.yingmin.Todo-Mobile") # The bundle identifier of your app
+apple_id("fahmi.dzulqarnain@silentmode.my") # Your Apple Developer Portal username
+
+itc_team_id("60005800") # App Store Connect Team ID
+team_id("7778Y2522V") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
