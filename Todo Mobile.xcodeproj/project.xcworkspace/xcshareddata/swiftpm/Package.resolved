@@ -1,0 +1,24 @@
+{
+  "originHash" : "ec06f227f1bb76faf0c778346597c115526d47e2213914eff010f762683c1d43",
+  "pins" : [
+    {
+      "identity" : "defaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Defaults.git",
+      "state" : {
+        "revision" : "38925e3cfacf3fb89a81a35b1cd44fd5a5b7e0fa",
+        "version" : "8.2.0"
+      }
+    },
+    {
+      "identity" : "swift-request",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/carson-katri/swift-request.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4fd7f593d10dfe310721de86bda601d817d11547"
+      }
+    }
+  ],
+  "version" : 3
+}
