@@ -8,20 +8,24 @@
 import Foundation
 
 protocol APIHelper {
-    func getRequest<T: Codable>(endpoint: String) async throws -> APIResponse<T>
-    func postRequest<T: Codable>(endpoint: String, body: (any Encodable)?) async throws -> APIResponse<T>
-    func patchRequest(endpoint: String, id: String, body: (any Encodable)?) async throws -> APIResponse<String>
-    func deleteRequest(endpoint: String, id: String) async throws -> APIResponse<String>
+    static func getRequest<T: Codable>(endpoint: String, queries: [String: String]?) async throws -> APIResponse<T>
+    static func postRequest<T: Codable, V: Codable>(endpoint: String, body: V) async throws -> APIResponse<T>
+    static func patchRequest<T: Codable>(endpoint: String, id: String, body: T) async throws -> APIResponse<String>
+    static func deleteRequest(endpoint: String, id: String) async throws -> APIResponse<String>
 }
 
 class APIHelperImplementation: APIHelper {
     
-    func getRequest<T: Codable>(endpoint: String) async throws -> APIResponse<T> {
+    static func getRequest<T: Codable>(
+        endpoint: String,
+        queries: [String: String]? = nil
+    ) async throws -> APIResponse<T> {
         try await withCheckedThrowingContinuation { continuation in
             Network<APIResponse<T>>().makeRequest(
                 path: endpoint,
                 method: .get,
                 body: String?.none,
+                queries: queries,
                 decodable: { _ in },
                 completion: { result in
                     switch result {
@@ -35,9 +39,9 @@ class APIHelperImplementation: APIHelper {
         }
     }
     
-    func postRequest<T: Codable>(
+    static func postRequest<T: Codable, V: Codable>(
         endpoint: String,
-        body: (any Encodable)
+        body: V
     ) async throws -> APIResponse<T> {
         try await withCheckedThrowingContinuation { continuation in
             Network<APIResponse<T>>().makeRequest(
@@ -57,14 +61,14 @@ class APIHelperImplementation: APIHelper {
         }
     }
     
-    func patchRequest(
+    static func patchRequest<T: Codable>(
         endpoint: String,
         id: String,
-        body: (any Encodable)?
+        body: T
     ) async throws -> APIResponse<String> {
         try await withCheckedThrowingContinuation { continuation in
             Network<APIResponse<String>>().makeRequest(
-                path: endpoint,
+                path: "\(endpoint)/\(id)",
                 method: .patch,
                 body: body,
                 decodable: {_ in},
@@ -80,14 +84,14 @@ class APIHelperImplementation: APIHelper {
         }
     }
     
-    func deleteRequest(
+    static func deleteRequest(
         endpoint: String,
         id: String
     ) async throws -> APIResponse<String> {
         try await withCheckedThrowingContinuation { continuation in
             Network<APIResponse<String>>().makeRequest(
-                path: endpoint,
-                method: .patch,
+                path: "\(endpoint)/\(id)",
+                method: .delete,
                 body: String?.none,
                 decodable: {_ in},
                 completion: { result in

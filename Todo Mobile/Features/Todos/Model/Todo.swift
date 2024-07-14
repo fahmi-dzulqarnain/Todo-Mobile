@@ -9,7 +9,7 @@ import Foundation
 
 struct Todo: Codable, Identifiable {
     let id: String
-    let title: String
-    let description: String
-    let isCompleted: Bool
+    var title: String
+    var description: String
+    var isCompleted: Bool
 }

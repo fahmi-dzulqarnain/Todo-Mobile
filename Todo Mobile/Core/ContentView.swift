@@ -5,6 +5,7 @@
 //  Created by Fahmi Dzulqarnain on 11/07/2024.
 //
 
+import Defaults
 import SwiftUI
 
 struct ContentView: View {
@@ -15,7 +16,11 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TodoListView()
+        if Defaults[.token] == nil {
+            SignInView()
+        } else {
+            TodoListView()
+        }
     }
 }
 
